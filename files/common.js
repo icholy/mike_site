@@ -2141,11 +2141,6 @@ $d = $(document);
           }[location.pathname] || location.pathname) + "_watermark"), cancelEvent(event);
         }
       });
-      if (1120 < X) {
-        if ("/m/" !== self.location.pathname.substr(0, 3)) {
-          $("body").append('<a rel="nofollow" target="_blank" href="/feedback?url=' + self.location.href + '"><div class="feedback">Feedback</div></a>');
-        }
-      }
       applyTips();
       update();
       run();
