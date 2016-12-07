@@ -9,73 +9,40 @@
 @media(min-width:760px){.imgflip-banner-top{width:728px;height:90px;}}
 </style>
 
-<link rel="icon" type="image/png" href="https://imgflip.com/favicon02.png">
-<link rel="icon" sizes="128x128" href="https://imgflip.com/apple-touch-icon.png">
 <link rel="stylesheet" href="./files/style.css" media="screen">
 <link rel="stylesheet" href="./files/m.css" media="screen">
 <title>Meme Generator - Imgflip</title>
-<meta name="description" content="Insanely fast, mobile-friendly meme generator. Caption memes or upload your own images to make custom memes">
-<meta name="keywords" content="meme generator, meme maker, meme, caption, image macro">
-<link rel="dns-prefetch" href="https://s.po.st/">
-
-<style>
-#memewrap div.im{background-image:url(//s.imgflip.com/ms1635.jpg)}</style>
-
-
-<script type="text/javascript" src="chrome-extension://lbfklacacfeehegkhklnoadciknkhlcb/inject/listener.js"></script></head>
 
 <body class="gray wide">
 
-<div id="fb-root"></div>
-<div style="font:400 2px/2px impact,impac;opacity:0;position:fixed;">s</div>
-
 <div id="page" class="m">
-	<div id="testline" style="display:none;position:absolute;"></div>
 
-	<div class="head clearfix"><div class="ad"><ins class="adsbygoogle imgflip-banner-top" style="display:inline-block;vertical-align:top;" data-ad-client="ca-pub-2078578220372194" data-ad-slot="2970038127"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+  <div class="head clearfix">
 		<h1>The Mike Meme Generator</h1>
 		<h2>The Meme Generator You Never Knew You Wanted</h2>
 	</div>
 
 	<div class="m mm-main ibox clearfix">
-	<div id="mm-preview-outer">
-
-		<div class="draw-panel clearfix"><div class="erase l but sml" title="erase all drawing">erase</div><div class="draw l but sml">Draw</div><div title="Change Line Color" class="picker" style="background-color: rgb(255, 51, 51);"><div class="pickpop"><div class="colorPanel"><div class="colorBox" style="background: rgb(0, 0, 0);"></div><div class="colorBox" style="background: rgb(255, 255, 255);"></div><div class="colorBox" style="background: rgb(153, 85, 85);"></div><div class="colorBox" style="background: rgb(255, 51, 51);"></div><div class="colorBox" style="background: rgb(255, 136, 0);"></div><div class="colorBox" style="background: rgb(238, 238, 0);"></div><div class="colorBox" style="background: rgb(34, 238, 34);"></div><div class="colorBox" style="background: rgb(51, 51, 255);"></div><div class="colorBox" style="background: rgb(0, 191, 243);"></div><div class="colorBox" style="background: rgb(221, 0, 204);"></div><input class="color-input" type="text" value="#ff3333" maxlength="7" tabindex="-1"></div></div></div><div class="mm-add-img l but sml">Add Image</div><div class="add-scumbag l but sml"><img alt="Add scumbag hat to meme" src="./files/scumbag_hat2.png"> Add Scumbag Hat</div><div class="mm-rotate l but sml" title="Rotate image"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve"><path d="M41.038,24.1l-7.152,9.342L26.734,24.1H31.4c-0.452-4.397-4.179-7.842-8.696-7.842c-4.82,0-8.742,3.922-8.742,8.742 s3.922,8.742,8.742,8.742c1.381,0,2.5,1.119,2.5,2.5s-1.119,2.5-2.5,2.5c-7.576,0-13.742-6.165-13.742-13.742 s6.166-13.742,13.742-13.742c7.274,0,13.23,5.686,13.697,12.842H41.038z"></path></svg></div></div><div class="mm-preview">
-			<canvas class="mm-canv" style="display: inline;" width="567.6741130091984" height="500.00000000000006"></canvas>
-			<img class="mm-img shadow" alt="meme generator image preview" src="">
-		</div>
-	</div><div id="mm-settings">
-
-		<div id="sel">
-			<div id="mygen" style="display: none;"></div>
-      <div id="memewrap">
-        <div class="im" style="background-position:0px 0" onclick="mm.select(0)" alt="Bad Luck Mike" title="Bad Luck Mike"></div>
+    <div id="mm-preview-outer">
+      <div class="mm-preview">
+        <canvas class="mm-canv" style="display: inline;" width="0" height="0"></canvas>
+        <img class="mm-img shadow" alt="meme generator image preview" src="">
       </div>
-		</div>
-
-		<div class="mm-text-boxes"></div>
-
-		<div class="gen-wrap clearfix">
-			<p class="gen-anon-wrap">
-				<label>
-					<input type="checkbox" class="gen-anon" name="anon" value="1">
-						<span>
-							Create Anonymously
-							<span class="tip">If this is checked, your username will not be associated with this image after you create it.</span>
-						</span>
-				</label>
-			</p>
-      <div class="mm-generate b but">Generate Meme</div>
-		</div>
-	</div>
-</div>
+    </div><div id="mm-settings">
+      <div class="mm-text-boxes"></div>
+      <div class="gen-wrap clearfix">
+        <div class="mm-generate b but">Generate Meme</div>
+      </div>
+    </div>
+  </div>
 
 
 </div>
 
 <script>
   usermemeID=0;
-  memes = [{
+  memes = [
+    {
       "id": 0,
       "name": "Bad Luck Mike",
       "w": 568,
@@ -83,8 +50,8 @@
       "altNames": "bad luck mike",
       "positions": "",
       "url_name": "Bad-Luck-Mike"
-  }];
-  sfw = 1;
+    }
+  ];
 </script>
 
 <!--[if lt IE 9]>

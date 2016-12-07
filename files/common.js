@@ -1,6 +1,7 @@
 $w = $(window);
 $d = $(document);
 (function(self, doc, $window, element, right) {
+
   /**
    * @param {Function} func
    * @param {number} wait
