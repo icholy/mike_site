@@ -2038,6 +2038,7 @@
       } else {
         options = content;
       }
+      self.select(0);
       if (1 < blockCount) {
         show("top");
       }
