@@ -98,7 +98,7 @@
 }
 @font-face {
     font-family: impac;
-    src: url('//imgflip.com/impact.ttf') format("truetype")
+    src: url('impact.ttf') format("truetype")
 }
 .mm-main {
     margin: 20px 0
