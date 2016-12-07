@@ -338,7 +338,7 @@
      * @return {?}
      */
     function load(json) {
-      return "/s/meme/" + json.url_name + ".jpg";
+      return json.url_name;
     }
     /**
      * @param {?} delay

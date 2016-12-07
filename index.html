@@ -51,42 +51,42 @@
       "h": 335,
       "altNames": "bad luck mike",
       "positions": "",
-      "url_name": "Bad-Luck-Mike"
+      "url_name": "memes/Bad-Luck-Mike.jpg"
     }, {
       "name": "Buzz Mike",
       "w": 568,
       "h": 335,
       "altNames": "buzz mike",
       "positions": "",
-      "url_name": "Buzz-Mike"
+      "url_name": "memes/Buzz-Mike.jpg"
     }, {
       "name": "Hippie Mike",
       "w": 568,
       "h": 335,
       "altNames": "hippie mike",
       "positions": "",
-      "url_name": "Hippie-Mike"
+      "url_name": "memes/Hippie-Mike.jpg"
     }, {
       "name": "Office Mike",
       "w": 568,
       "h": 335,
       "altNames": "office mike",
       "positions": "",
-      "url_name": "Office-Mike"
+      "url_name": "memes/Office-Mike.jpg"
     }, {
       "name": "Skumbag Mike",
       "w": 568,
       "h": 335,
       "altNames": "skumbag mike",
       "positions": "",
-      "url_name": "Skumbag-Mike"
+      "url_name": "memes/Skumbag-Mike.jpg"
     }, {
       "name": "Tripping Mike",
       "w": 568,
       "h": 335,
       "altNames": "tripping mike",
       "positions": "",
-      "url_name": "Tripping-Mike"
+      "url_name": "memes/Tripping-Mike.jpg"
     }
   ];
 
@@ -105,7 +105,7 @@ $(function (){
   var size = 100;
 
   for (var i = 0; i < memes.length; i++) {
-    var $img = $('<img src="./s/meme/' + memes[i].url_name + '.jpg" width="' + size + 'px" height="' + size + 'px" onclick="mm.select(' + i + ')">');
+    var $img = $('<img src="' + memes[i].url_name + '" width="' + size + 'px" height="' + size + 'px" onclick="mm.select(' + i + ')">');
     $memeList.append($img);
   }
 
