@@ -338,7 +338,7 @@
      * @return {?}
      */
     function load(json) {
-      return 0 === json.id ? node ? node.src : "" : json.url_name ? "/s/meme/" + json.url_name + ".jpg" : "https://i.imgflip.com/" + json.id.toString(36) + ".jpg?a" + Math.round(+new Date / 1E3 / 3600) + ("imgflip.com" !== win.location.hostname ? "&j" : "");
+      return "/s/meme/" + json.url_name + ".jpg";
     }
     /**
      * @param {?} delay
