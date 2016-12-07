@@ -153,7 +153,7 @@
           '<h3>Now save this and post it on mikes wall</h3>',
           '<p><b>Desktop:</b> Right Click the Image and "Save Image As"</p>',
           '<p><b>Android:</b> Press the Image to make it Fullsize. Save from there</p>',
-          '<p><b>iPhone:</b> Press the Image and Hold and "Save Image"</p>',
+          '<p><b>iPhone:</b> Press and Hold the Image and "Save Image"</p>',
           '</div>'
         ].join(""),
         bg : "transparent",
