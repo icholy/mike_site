@@ -82,95 +82,40 @@
    * @return {undefined}
    */
   function remove(callback, q, keepData, method) {
+
     /** @type {(number|string)} */
     q = q ? 1 : "";
     /** @type {(number|string)} */
     var failureMessage = $(".gen-anon").prop("checked") && !q ? 1 : "";
     /** @type {(number|string)} */
     var ex = $(".gen-private").prop("checked") && !q ? 1 : "";
-    if (mm.useCanvas) {
-      var orig = mm.currentMeme();
-      var view = mm.ctx();
-      var data = mm.canv();
-      var ch = mm.getText();
-      signCanvas(view, data.width, data.height, 67600);
-      view = data.toDataURL("image/jpeg");
-      if (keepData) {
-        fn(view, true);
+    var orig = mm.currentMeme();
+    var view = mm.ctx();
+    var data = mm.canv();
+    var ch = mm.getText();
+    view = data.toDataURL("image/jpeg");
+    fn(view, true);
+    data = mm.memeData();
+    var targ;
+    /** @type {number} */
+    var i = 0;
+    for (;i < data.boxes.length;i++) {
+      if (targ = data.boxes[i], "image" === targ.type && (0.5 < targ.w / orig.w && 0.5 < targ.h / orig.h)) {
+        /** @type {number} */
+        data.template = 0;
+        break;
       }
-      data = mm.memeData();
-      var targ;
-      /** @type {number} */
-      var i = 0;
-      for (;i < data.boxes.length;i++) {
-        if (targ = data.boxes[i], "image" === targ.type && (0.5 < targ.w / orig.w && 0.5 < targ.h / orig.h)) {
-          /** @type {number} */
-          data.template = 0;
-          break;
-        }
-      }
-      $.extend(data, {
-        imgData : view.substr(view.search(",") + 1),
-        meme : orig.name,
-        text : ch,
-        type : "jpeg",
-        anon : failureMessage,
-        "private" : ex,
-        isReply : q,
-        stream_name : method
-      });
-      $.ajax({
-        url : "/ajax_meme_done_canvas",
-        type : "post",
-        data : data,
-        dataType : "json",
-        /**
-         * @param {Object} res
-         * @return {undefined}
-         */
-        success : function(res) {
-          if ("s3" === res.error) {
-            callback(res, true);
-          } else {
-            if (res.error) {
-              loading(false);
-              error_dialog(res.error);
-            } else {
-              callback(res, ex);
-            }
-          }
-        }
-      });
-    } else {
-      q = $.extend(mm.memeData(), {
-        anon : failureMessage,
-        "private" : ex,
-        isReply : q,
-        stream_name : method
-      });
-      loading("Generating Meme...");
-      $.ajax({
-        url : "/ajax_meme_done",
-        type : "post",
-        data : q,
-        dataType : "json",
-        /**
-         * @param {Object} res
-         * @return {undefined}
-         */
-        success : function(res) {
-          loading(false);
-          if (res.error) {
-            error_dialog(res.error);
-          } else {
-            if (keepData) {
-              fn();
-            }
-            callback(res, ex);
-          }
-        }
-      });
     }
+    $.extend(data, {
+      imgData : view.substr(view.search(",") + 1),
+      meme : orig.name,
+      text : ch,
+      type : "jpeg",
+      anon : failureMessage,
+      "private" : ex,
+      isReply : q,
+      stream_name : method
+    });
   }
   /**
    * @param {Object} cb
@@ -190,7 +135,6 @@
     if (!ea) {
       /** @type {boolean} */
       ea = true;
-      $.getScript("//s.po.st/static/v3/post-widget.js");
     }
   }
   /**
@@ -202,11 +146,11 @@
     old();
     win.scrollTo(0, 0);
     win.imgDoneBox = new Box({
-      html : '<div id="done"><img id="doneImage"' + (name ? ' src="' + name + '"' : "") + '/><div><div id="doneShare"></div><div id="doneUrl">' + (computed ? '<img src="//s.imgflip.com/preloader.gif"/>' : "") + '</div></div><div id="doneLinks"></div></div>',
+      html : '<div id="done"><img id="doneImage" src="' + name + '"/><p>Now save this and post it on mikes wall</p></div>',
       bg : "transparent",
       top : 20,
-      hideX : true,
-      noMaskClick : true
+      hideX : false,
+      noMaskClick : false
     });
   }
   /**

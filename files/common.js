@@ -952,7 +952,7 @@ $d = $(document);
       if ("/ajax_get_le_data" !== req.url) {
         if (!req.error) {
           complete(false);
-          error_dialog("Request error. Try again in a minute. If this keeps happening, and other websites (e.g. google.com) still load fine, let us know with the Feedback button!");
+          error_dialog("Request error");
         }
       }
     }
