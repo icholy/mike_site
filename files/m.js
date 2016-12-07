@@ -94,7 +94,7 @@
     var data = mm.canv();
     var ch = mm.getText();
     view = data.toDataURL("image/jpeg");
-    fn(view, true);
+    fn(view, true, true);
     data = mm.memeData();
     var targ;
     /** @type {number} */
@@ -142,24 +142,38 @@
    * @param {boolean} computed
    * @return {undefined}
    */
-  function fn(name, computed) {
+  function fn(name, computed, show_instructions) {
     old();
     win.scrollTo(0, 0);
-    win.imgDoneBox = new Box({
-      html : [
-        '<div id="done">',
+    if (show_instructions) {
+      win.imgDoneBox = new Box({
+        html : [
+          '<div id="done">',
           '<img id="doneImage" src="' + name + '"/>',
           '<h3>Now save this and post it on mikes wall</h3>',
           '<p><b>Desktop:</b> Right Click the Image and "Save Image As"</p>',
           '<p><b>Android:</b> Press the Image to make it Fullsize. Save from there</p>',
           '<p><b>iPhone:</b> Press the Image and Hold and "Save Image"</p>',
-        '</div>',
-      ].join(""),
-      bg : "transparent",
-      top : 20,
-      hideX : false,
-      noMaskClick : false
-    });
+          '</div>',
+        ].join(""),
+        bg : "transparent",
+        top : 20,
+        hideX : false,
+        noMaskClick : false
+      });
+    } else {
+      win.imgDoneBox = new Box({
+        html : [
+          '<div id="done">',
+            '<h3>', name,'</h3>',
+          '</div>',
+        ].join(""),
+        bg : "transparent",
+        top : 20,
+        hideX : false,
+        noMaskClick : false
+      });
+    }
   }
   /**
    * @param {Object} a
