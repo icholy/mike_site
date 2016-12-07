@@ -139,7 +139,6 @@
               callback(res, ex);
             }
           }
-          _gaq.push(["_trackEvent", "memedoneCanvas " + (res.error ? "Failure" : "Success"), orig.id + " - " + orig.name, I.user.user || "anon"]);
         }
       });
     } else {
@@ -169,7 +168,6 @@
             }
             callback(res, ex);
           }
-          _gaq.push(["_trackEvent", "memedoneAjax " + (res.error ? "Failure" : "Success"), "derp", I.user.user || "anon"]);
         }
       });
     }
@@ -220,7 +218,6 @@
    * @return {undefined}
    */
   function init(a, body, ext, element, options) {
-    _gaq.push("_trackPageview");
     var data = {
       meme : "jpg",
       gif : "gif",
@@ -319,7 +316,6 @@
           body.find(".done-zazzle-link").click(function() {
             /** @type {boolean} */
             p = false;
-            _gaq.push(["_trackEvent", "zazzle click", win.mm ? win.mm.currentMeme().name : ext, I.user.id ? "logged-in" : "logged-out"]);
           });
           element.after(body);
         }
@@ -2318,18 +2314,6 @@
     });
     $("#shareGen").click(function() {
       $(this).select();
-    });
-    $(".draw").click(function() {
-      _gaq.push(["_trackEvent", "draw panel", "draw", mm.currentMeme().name]);
-    });
-    $(".mm-add-img").click(function() {
-      _gaq.push(["_trackEvent", "draw panel", "add image", mm.currentMeme().name]);
-    });
-    $(".add-scumbag").click(function() {
-      _gaq.push(["_trackEvent", "draw panel", "add scumbag", mm.currentMeme().name]);
-    });
-    $(".mm-rotate").click(function() {
-      _gaq.push(["_trackEvent", "draw panel", "rotate", mm.currentMeme().name]);
     });
     tabs.on("click", ".mm-set-positions", function() {
       mm.ajaxSetPositions();

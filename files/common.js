@@ -565,8 +565,6 @@ $d = $(document);
         setTimeout(action, 10);
       }
     };
-    _gaq.push(["_set", "hitCallback", action]);
-    _gaq.push(["_trackEvent", "Flip Nav", str, location.href]);
     $.get("/ajax_img_flip?current_iid=" + (self.img ? self.img.id >> 0 : 0), function(textAlt) {
       /** @type {string} */
       text = textAlt;
@@ -936,7 +934,6 @@ $d = $(document);
   I = self.I || {
     user : {}
   };
-  self._gaq = self._gaq || [];
   if (!self.console) {
     console = {};
   }
@@ -953,7 +950,6 @@ $d = $(document);
   $(doc).ajaxError(function(deepDataAndEvents, httpRequest, req, dataAndEvents) {
     if ("/" === req.url[0]) {
       if ("/ajax_get_le_data" !== req.url) {
-        _gaq.push(["_trackEvent", "ajaxError", req.url, (httpRequest.status || "") + "|" + (httpRequest.responseText || "").substr(0, 100) + "|" + dataAndEvents]);
         if (!req.error) {
           complete(false);
           error_dialog("Request error. Try again in a minute. If this keeps happening, and other websites (e.g. google.com) still load fine, let us know with the Feedback button!");
@@ -1561,7 +1557,6 @@ $d = $(document);
           /** @type {string} */
           text = radio[i].checked ? text + "1" : text + "0";
         }
-        _gaq.push(["_trackEvent", "main_tags", (error() ? "logged-in: " : "") + text, self.location.href]);
         $.ajax({
           url : "/ajax_main_tags",
           data : "cookie_tags=" + text,
@@ -1577,7 +1572,6 @@ $d = $(document);
         var val = $(this).parent().hasClass("safe-status-SFW") ? "NSFW" : "SFW";
         /** @type {string} */
         var name = "SFW" === val ? "NSFW" : "SFW";
-        _gaq.push(["_trackEvent", "SFW Button", name + " --\x3e " + val, (error() ? "" : "not ") + "logged in"]);
         if (!error()) {
           return cancelEvent(event), select();
         }
@@ -1613,19 +1607,6 @@ $d = $(document);
      * @return {undefined}
      */
     function update() {
-      element.on("contextmenu", ".ctx-gif", function(event) {
-        var fragment = $(this).data("src") || $(this).attr("src");
-        if (fragment = /\/([a-z0-9]+)\.gif/.exec(fragment)) {
-          return _gaq.push(["_trackEvent", "gif contextmenu", location.pathname, fragment[1]]), fragment = '<div class="img-code-menu">' + fn(fragment[1], "gif") + "</div>", BOX.show({
-            html : fragment,
-            w : 360
-          }), cancelEvent(event);
-        }
-      }).on("click", ".img-code", function() {
-        $(this).select();
-      }).on("click", "#img-download,.img-code", function() {
-        _gaq.push(["_trackEvent", $(this).attr("class"), location.pathname, $(this).attr("href")]);
-      });
     }
     /**
      * @return {undefined}
@@ -2201,10 +2182,6 @@ $d = $(document);
         });
         $("#img-prev,#img-next").click(function(event) {
           var dest = $(this).attr("href");
-          _gaq.push(["_set", "hitCallback", function() {
-            self.location = dest;
-          }]);
-          _gaq.push(["_trackEvent", "Flip Nav", $(this).attr("id"), location.href]);
           if (27 === I.user.id) {
             self.location = dest;
           }
