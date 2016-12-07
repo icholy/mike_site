@@ -2120,9 +2120,6 @@
           var b = $('<div class="erase l but sml" title="erase all drawing">erase</div>');
           var $link = $('<div class="draw l but sml">Draw</div>');
           var container = $('<div title="Change Line Color"></div>');
-          var property = $('<div class="add-scumbag l but sml"><img alt="Add scumbag hat to meme" src="' + pattern + '"/> Add Scumbag Hat</div>');
-          var slider = $('<div class="mm-add-img l but sml">Add Image</div>');
-          var marker = $('<div class="mm-rotate l but sml" title="Rotate image"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve"><path d="M41.038,24.1l-7.152,9.342L26.734,24.1H31.4c-0.452-4.397-4.179-7.842-8.696-7.842c-4.82,0-8.742,3.922-8.742,8.742 s3.922,8.742,8.742,8.742c1.381,0,2.5,1.119,2.5,2.5s-1.119,2.5-2.5,2.5c-7.576,0-13.742-6.165-13.742-13.742 s6.166-13.742,13.742-13.742c7.274,0,13.23,5.686,13.697,12.842H41.038z"/></svg></div>');
           // li.append(b).append($link).append(container).append(slider).append(property).append(marker);
           image = $("<canvas/>")[0];
           context = image.getContext("2d");
@@ -2138,13 +2135,6 @@
             has_drawing = false;
             update();
           });
-          property.click(function() {
-            list.push(new handler(pos));
-            update();
-            go(true);
-          });
-          marker.click(move);
-          slider.click(init);
           $fruits.before(li);
           /** @type {string} */
           text = option[3];
