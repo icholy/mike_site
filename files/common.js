@@ -376,136 +376,32 @@ $d = $(document);
    * @return {undefined}
    */
   function create(event) {
-    cancelEvent(event);
-    var container = $("#miniNots");
-    if ("none" === container.css("display")) {
-      container.show();
-      if ("" === container.html()) {
-        container.html('<img class="load" src="//s.imgflip.com/preloader.gif"/>');
-        $.ajax({
-          url : "/getNots?len=5",
-          /**
-           * @param {?} feed
-           * @return {undefined}
-           */
-          success : function(feed) {
-            container.html("<div class='notifs'><a class='notif all' href='/notifications'>View All Notifications</a></div>").find(".notifs").prepend(feed);
-          }
-        });
-        container.click(stopPropagation);
-      }
-      element.on("click", click);
-    } else {
-      click();
-    }
   }
   /**
    * @return {undefined}
    */
   function onSuccess() {
-    var register_pw = $(this).closest(".com").attr("id").substr(3);
-    if (confirm("Delete comment?")) {
-      $.ajax({
-        url : "/ajax_com_delete",
-        data : "cid=" + register_pw,
-        /**
-         * @param {string} s
-         * @return {undefined}
-         */
-        success : function(s) {
-          if (!s >> 0) {
-            alert(s);
-          } else {
-            $("#com" + s).slideUp(function() {
-              $(this).remove();
-            });
-          }
-        }
-      });
-    }
   }
   /**
    * @return {undefined}
    */
   function callback() {
-    var $btn = $(this);
-    var cid = $btn.closest(".com").attr("id").substr(3);
-    if (confirm("Are you sure you want to flag this comment for violating the Imgflip Terms of Use? If you disagree with someone but they are not breaking the rules, use the downvote button!")) {
-      complete("Flagging comment...");
-      $.ajax({
-        url : "/ajax_com_flag",
-        data : {
-          cid : cid
-        },
-        dataType : "json",
-        /**
-         * @param {Object} jqXHR
-         * @return {undefined}
-         */
-        success : function(jqXHR) {
-          complete(false);
-          if (jqXHR.error) {
-            error_dialog(jqXHR.error);
-          } else {
-            MSG("Flag submitted successfully!", "green");
-            $btn.remove();
-          }
-        }
-      });
-    }
   }
   /**
    * @return {undefined}
    */
   function update() {
-    if (error()) {
-      if (I.user.email_verified || I.user.pro) {
-        var $item = $(this).closest(".com");
-        var $link = $item.find(".c-new-wrap");
-        if ($link[0]) {
-          if (!$link.find(".c-new-text").val()) {
-            $link.remove();
-          }
-        } else {
-          $link = $("#c-new-main").clone();
-          $link.attr("id", "");
-          $item.append($link);
-          $link.find(".c-new-text").focus();
-        }
-      } else {
-        valueAccessor();
-      }
-    } else {
-      select();
-    }
   }
   /**
    * @return {undefined}
    */
   function valueAccessor() {
-    DLG("Email Verification Required", 'To leave a comment, your email address must be verified (Pro accounts and Google Login are auto-verified). If you are a new user, just check your email and find the "Verify your Imgflip email" message. Otherwise, you can either login with Google, subscribe to Imgflip Pro, or re-send the verification email using the button in your <a href="/settings">Imgflip settings</a>.');
   }
   /**
    * @param {string} rows
    * @return {undefined}
    */
   function render(rows) {
-    $(rows).each(function() {
-      var btn = $(this);
-      if (!btn.data("dimImage")) {
-        btn.data("dimImage", true);
-        btn.click(function() {
-          BOX.show({
-            img : btn.attr("src")
-          });
-          if (btn.hasClass("ctx-gif")) {
-            $(".BOX img").addClass("ctx-gif");
-          } else {
-            $(".BOX img").removeClass("ctx-gif");
-          }
-        });
-      }
-    });
   }
   /**
    * @param {boolean} gotoEnd
@@ -519,59 +415,11 @@ $d = $(document);
    * @return {undefined}
    */
   function onClick(event) {
-    if (!(event.metaKey || (event.ctrlKey || event.altKey))) {
-      switch(event.which) {
-        case 83:
-        ;
-        case 72:
-          show(img.id, 0, ".img-vote-wrap");
-          break;
-        case 87:
-        ;
-        case 76:
-          show(img.id, 1, ".img-vote-wrap");
-          break;
-        case 68:
-          initialize();
-          break;
-        case 74:
-        ;
-        case 39:
-          $("#img-next").click();
-          break;
-        case 75:
-        ;
-        case 37:
-          $("#img-prev").click();
-          break;
-        case 65:
-          self.history.back();
-      }
-    }
   }
   /**
    * @return {undefined}
    */
   function initialize() {
-    var text;
-    var str = $(this).attr("id") || "hotkey";
-    /**
-     * @return {undefined}
-     */
-    var action = function() {
-      if (text) {
-        self.location = text;
-      } else {
-        setTimeout(action, 10);
-      }
-    };
-    $.get("/ajax_img_flip?current_iid=" + (self.img ? self.img.id >> 0 : 0), function(textAlt) {
-      /** @type {string} */
-      text = textAlt;
-      if (27 === I.user.id) {
-        action();
-      }
-    });
   }
   /**
    * @param {string} positions
@@ -580,107 +428,11 @@ $d = $(document);
    * @return {undefined}
    */
   function show(positions, recurring, item) {
-    if (I.done) {
-      if (!error()) {
-        select();
-      } else {
-        if (positions) {
-          var label = $(item);
-          item = label.find(".img-up");
-          label = label.find(".img-down");
-          var alias = item.hasClass("set");
-          var set = label.hasClass("set");
-          /** @type {number} */
-          var new_vote = -1;
-          item.add(label).removeClass("set");
-          if (recurring || set) {
-            if (recurring) {
-              if (!alias) {
-                item.addClass("set");
-                /** @type {number} */
-                new_vote = 1;
-              }
-            }
-          } else {
-            label.addClass("set");
-            /** @type {number} */
-            new_vote = 0;
-          }
-          $.ajax({
-            url : "/ajax_vote",
-            dataType : "json",
-            data : {
-              new_vote : new_vote,
-              iid : positions
-            },
-            /**
-             * @param {Object} jqXHR
-             * @return {undefined}
-             */
-            success : function(jqXHR) {
-              if (jqXHR.error) {
-                error_dialog(jqXHR.error);
-              }
-            }
-          });
-        }
-      }
-    }
   }
   /**
    * @return {undefined}
    */
   function fn() {
-    if (I.done) {
-      if (error()) {
-        var view = $(this);
-        /** @type {number} */
-        var cid = view.closest(".com").attr("id").substr(3) >> 0;
-        /** @type {string} */
-        var div = "#com" + cid;
-        var bulk = view.hasClass("set");
-        var length = view.hasClass("c-up");
-        /** @type {number} */
-        var value = 0;
-        if (length) {
-          /** @type {number} */
-          value = bulk ? -1 : 1;
-        } else {
-          if (!bulk) {
-            if ($(div + " .c-up").hasClass("set")) {
-              /** @type {number} */
-              value = -1;
-            }
-          }
-        }
-        div = $(div + " .points").first();
-        /** @type {number} */
-        value = parseInt(div.text()) + value;
-        div.text(value + (1 === value ? " up" : " ups"));
-        view.parent().find(".set").removeClass("set");
-        if (!bulk) {
-          view.addClass("set");
-        }
-        $.ajax({
-          url : "/ajax_comment_vote",
-          data : {
-            new_vote : bulk ? -1 : length ? 1 : 0,
-            cid : cid
-          },
-          /**
-           * @param {?} textStatus
-           * @return {undefined}
-           */
-          success : function(textStatus) {
-            if (textStatus) {
-              alert(textStatus);
-            }
-          }
-        });
-      } else {
-        select();
-      }
-    }
   }
   /**
    * @param {string} signal_eof
@@ -688,138 +440,23 @@ $d = $(document);
    * @return {?}
    */
   function next(signal_eof, elem) {
-    if (!signal_eof || submitting) {
-      return false;
-    }
-    /** @type {boolean} */
-    submitting = true;
-    /** @type {number} */
-    var comImage = elem.data("meme-iid") >> 0;
-    var val = elem.find(".c-new-text").val() || "";
-    var context = elem.closest(".com");
-    var pid = (context.attr("id") || "").substr(3) || 0;
-    /** @type {string} */
-    var later = "";
-    if (!comImage) {
-      if (!(val != right && "" != val)) {
-        later += "<li>Enter some text</li>";
-      }
-    }
-    if ("" !== later) {
-      error_dialog(later);
-      /** @type {boolean} */
-      submitting = false;
-    } else {
-      complete("Adding comment...");
-      $.ajax({
-        url : "/ajax_add_comment",
-        type : "post",
-        dataType : "json",
-        data : {
-          text : val,
-          iid : signal_eof,
-          comImage : comImage,
-          parent_id : pid,
-          level : pid ? ~~context.data("l") + 1 : 0
-        },
-        /**
-         * @param {Object} data
-         * @return {undefined}
-         */
-        success : function(data) {
-          if (data.error) {
-            error_dialog(data.error);
-          } else {
-            data = $(data.com_html);
-            if (pid) {
-              elem.remove();
-              context.after(data);
-            } else {
-              elem.find(".c-new-text").val("");
-              if (comImage) {
-                elem.removeClass("has-pending-img").data("meme-iid", null).find(".c-pending-img").remove();
-              }
-              var that = $("#comments");
-              that.append(data);
-              /** @type {number} */
-              that = that.offset().top + that.innerHeight() - ($window.scrollTop() + $window.height());
-              if (0 < that) {
-                $("html,body").animate({
-                  scrollTop : "+=" + (that + 150)
-                });
-              }
-            }
-            render(".c-text img");
-            load(data);
-          }
-        },
-        /**
-         * @return {undefined}
-         */
-        complete : function() {
-          complete(false);
-          /** @type {boolean} */
-          submitting = false;
-        }
-      });
-    }
   }
   /**
    * @param {string} e
    * @return {undefined}
    */
   function load(e) {
-    var cmp = I.user;
-    var n;
-    var id;
-    var range;
-    $(e || ".com").quickEach(function() {
-      n = this.attr("id").substr(3);
-      if (I.com_votes[n]) {
-        /** @type {string} */
-        id = "1" === I.com_votes[n] ? ".c-up" : ".c-down";
-        this.find(id).addClass("set");
-      }
-      var uid = this.data("uid");
-      if (4 < cmp.priv || (cmp.id == uid || cmp.id === img.stream_owner_uid)) {
-        if (!this.find(".c-delete")[0]) {
-          this.find(".comTitle").before('<div class="c-delete a">delete</div>');
-        }
-      }
-      range = this.find(".c-text");
-      if (!(range.is(":empty") && !range.data("text"))) {
-        this.find(".comTitle").before('<div class="c-flag a">flag</div>');
-      }
-    });
   }
   /**
    * @param {boolean} mayParseLabeledStatementInstead
    * @return {undefined}
    */
   function complete(mayParseLabeledStatementInstead) {
-    if (false === mayParseLabeledStatementInstead) {
-      if (s) {
-        s.remove();
-      }
-      /** @type {boolean} */
-      h = s = false;
-    } else {
-      if (!s) {
-        s = $('<div id="site-loading"><div id="site-loading-inner"><div id="site-loading-msg"></div><div id="site-loading-bar"><div id="site-loading-progress"></div></div></div></div>');
-        $("body").append(s);
-      }
-      $("#site-loading-msg").html(mayParseLabeledStatementInstead || "Loading...");
-    }
   }
   /**
    * @return {undefined}
    */
   function handle() {
-    /** @type {string} */
-    var blockHTML = '<div class="img-flag-popup" data-iid="' + $(this).data("iid") + '"><div class="img-flag-title">Flag Image</div><div class="img-flag-label">Reason:</div><select class="img-flag-select"><option value></option>' + (27 === I.user.id ? '<option value="img-sfw">SFW</option>' : "") + '<option value="img-nsfw">NSFW (adult/mature content)</option><option value="img-spam">Spam (advertising, website spam, etc)</option><option value="img-abuse">Abuse (anything breaching our Terms of Service)</option></select><div class="img-flag-label">Additional Comments [optional]</div><textarea class="img-flag-text" maxlength="200"></textarea><div class="img-flag-submit b but">Submit</div><div class="img-flag-cancel l but">Cancel</div></div>';
-    BOX.show({
-      html : blockHTML
-    });
   }
   /**
    * @return {undefined}
@@ -831,82 +468,18 @@ $d = $(document);
    * @return {undefined}
    */
   function get() {
-    var msg = $(this).closest(".img-flag-popup");
-    var iid = msg.data("iid");
-    var paramType = msg.find(".img-flag-select").val();
-    msg = msg.find(".img-flag-text").val();
-    if (paramType) {
-      complete();
-      $.ajax({
-        url : "/ajax_flag",
-        type : "post",
-        dataType : "json",
-        data : {
-          iid : iid,
-          type : paramType,
-          text : msg
-        },
-        /**
-         * @param {Object} log
-         * @return {undefined}
-         */
-        success : function(log) {
-          complete(false);
-          BOX.hide();
-          $('.img-flag[data-iid="' + iid + '"]').remove();
-          if (log.error) {
-            MSG(log.error, "red");
-          } else {
-            MSG(log.message, "green");
-          }
-        }
-      });
-    } else {
-      MSG("Select a reason", "red");
-    }
   }
   /**
    * @param {string} url
    * @return {undefined}
    */
   function open(url) {
-    complete();
-    $.get("/ajax_submit_popup", {
-      iid : url,
-      subsLeft : I.user.subsLeft
-    }, function(_html) {
-      complete(false);
-      BOX.show({
-        html : _html,
-        bg : "transparent"
-      });
-      $("#submit-submit").click(function() {
-        start(url);
-      });
-      $("#submit-cancel").click(function() {
-        BOX.hide();
-      });
-    });
   }
   /**
    * @param {string} index
    * @return {undefined}
    */
   function start(index) {
-    BOX.hide();
-    complete("Submitting image...");
-    $.get("/ajax_submit_creation?iid=" + index, function(deepDataAndEvents) {
-      complete(false);
-      if (deepDataAndEvents) {
-        error_dialog(deepDataAndEvents);
-      } else {
-        BOX.show({
-          html : "<h2>Image submitted successfully!</h2><p>Sharing your image will make it more likely to reach the homepage.</p>",
-          w : 400,
-          pad : 20
-        });
-      }
-    });
   }
   /**
    * @param {string} total
@@ -914,14 +487,6 @@ $d = $(document);
    * @return {undefined}
    */
   function done(total, type) {
-    /** @type {string} */
-    var msg = "/pro?from=" + type;
-    total = total.replace(/Imgflip Pro/, '<a href="' + msg + '">Imgflip Pro</a>');
-    BOX.show({
-      html : '<div class="pro-msg">' + total + '</div><a class="b but pro-learn-more" href="' + msg + '">Learn More &rsaquo;</a>',
-      w : 500,
-      pad : 20
-    });
   }
   /**
    * @return {?}
@@ -1516,24 +1081,6 @@ $d = $(document);
    * @return {undefined}
    */
   self.signCanvas = function(ctx, row, height, idx) {
-    idx = idx || 4E4;
-    if (!(I.user.pro && true === $(".gen-no-watermark").prop("checked") || row * height <= idx)) {
-      ctx.save();
-      /** @type {string} */
-      ctx.font = "10px Arial";
-      /** @type {string} */
-      ctx.fillStyle = "#ddd";
-      /** @type {number} */
-      ctx.shadowBlur = 2;
-      /** @type {string} */
-      ctx.shadowColor = "#000";
-      /** @type {number} */
-      row = 0;
-      for (;7 > row;row++) {
-        ctx.fillText("imgflip.com", 3, height - 4);
-      }
-      ctx.restore();
-    }
   };
   /** @type {function (string, string): undefined} */
   self.upgradeBox = done;
@@ -1644,54 +1191,6 @@ $d = $(document);
      * @return {?}
      */
     function fn(message, text, z, format, range) {
-      var charset;
-      var gifgenerator;
-      switch(range) {
-        case "gif":
-          /** @type {string} */
-          charset = "GIF Maker";
-          /** @type {string} */
-          gifgenerator = "gifgenerator";
-          break;
-        case "meme":
-          /** @type {string} */
-          charset = "Meme Generator";
-          /** @type {string} */
-          gifgenerator = "memegenerator";
-          break;
-        case "pie":
-          /** @type {string} */
-          charset = "Pie Chart Maker";
-          /** @type {string} */
-          gifgenerator = "piemaker";
-      }
-      /** @type {string} */
-      var value = message + "." + text;
-      /** @type {string} */
-      var tval = "https://i.imgflip.com/" + value;
-      /** @type {string} */
-      var s = "https://imgflip.com/" + ("gif" === text ? "gif/" : "i/") + message;
-      /** @type {string} */
-      var out = "";
-      if (!z) {
-        out += '<div class="img-code-wrap"><div class="img-code-label">Image Link:</div><input type="text" class="img-code link" value="' + s + '"/></div><div class="img-code-wrap"><div class="img-code-label">BBCode (forums):</div><input type="text" class="img-code forum" value="' + ("[url=" + s + "][img]" + tval + "[/img][/url]" + (charset ? "[url=https://imgflip.com/" + gifgenerator + "]via Imgflip " + charset + "[/url]" : "")) + '"/></div><div class="img-code-wrap"><div class="img-code-label">Image HTML:</div><input type="text" class="img-code html" value=\'' + 
-        ('<a href="' + s + '"><img src="' + tval + '"' + (range ? ' title="made at imgflip.com"' : "") + "/></a>") + "'/></div>";
-      }
-      if (!format) {
-        /** @type {string} */
-        format = "";
-        if (doc.createElement("a").hasOwnProperty("download")) {
-          /** @type {string} */
-          message = z ? "https://i2.imgflip.com/" + value : tval;
-          /** @type {string} */
-          format = ' download="' + value + '"';
-        } else {
-          /** @type {string} */
-          message = "/download_image?idsmall=" + message + "&ext=" + text;
-        }
-        out += '<div class="img-code-wrap"><a id="img-download" class="img-download l but" href="' + message + '"' + format + ">Download Image</a></div>";
-      }
-      return out;
     }
     /**
      * @param {string} two
@@ -1701,13 +1200,6 @@ $d = $(document);
      * @return {undefined}
      */
     function done(two, total, val, end) {
-      end = end.replace(/"/g, "&quot;");
-      /** @type {string} */
-      var e = "https://imgflip.com/" + ("gif" === val ? "gif/" : "i/") + total;
-      /** @type {string} */
-      total = "http://i.imgflip.com/" + total + "." + val;
-      $(two).html('<div class="pw-widget pw-size-large" pw:image="' + total + '" pw:url="' + e + '"' + (end ? ' pw:title="' + end + '"' : "") + ' pw:twitter-via="imgflip"><a class="pw-button-facebook"></a><a class="pw-button-twitter"></a><a class="pw-button-reddit"></a><a class="pw-button-tumblr"></a><a class="pw-button-pinterest"></a><a class="pw-button-post"></a></div>');
-      after();
     }
     /**
      * @return {undefined}
@@ -1739,8 +1231,7 @@ $d = $(document);
       }
       /** @type {string} */
       s = s && ss ? "" : " imgflip-banner-top";
-      $.getScript("//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js");
-      return'<div class="ad"><ins class="adsbygoogle' + s + '" style="' + e + '" data-ad-client="ca-pub-2078578220372194" data-ad-slot="' + dataAndEvents + '"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});\x3c/script>' + (charset ? '<div class="ad-pro-callout">tip: <a href="/pro?from=side_ad">Pro users don\'t see ads</a></div>' : "") + "</div>";
+      return '';
     }
     /**
      * @param {number} opt_attributes
@@ -1748,152 +1239,41 @@ $d = $(document);
      * @return {undefined}
      */
     function next(opt_attributes, elem) {
-      /** @type {Element} */
-      var s = doc.createElement("script");
-      /** @type {string} */
-      s.id = "rc_" + Math.floor(1E3 * Math.random());
-      /** @type {string} */
-      s.type = "text/javascript";
-      /** @type {string} */
-      s.src = "https://trends.revcontent.com/serve.js.php?w=" + opt_attributes + "&t=" + s.id + "&c=" + (new Date).getTime() + "&width=" + (self.outerWidth || doc.documentElement.clientWidth);
-      /** @type {boolean} */
-      s.async = true;
-      doc.getElementById(elem).appendChild(s);
     }
     /**
      * @return {undefined}
      */
     function onSuccess() {
-      $.ajax({
-        url : "/ajax_change_table",
-        data : "toImages=" + img.id,
-        /**
-         * @param {?} textStatus
-         * @return {undefined}
-         */
-        success : function(textStatus) {
-          if (textStatus) {
-            alert(textStatus);
-          } else {
-            $("#toImages").fadeOut();
-          }
-        }
-      });
     }
     /**
      * @return {undefined}
      */
     function login() {
-      $.ajax({
-        url : "/ajax_moderate",
-        type : "post",
-        data : "action=approve&live=1&iid=" + img.id,
-        /**
-         * @return {undefined}
-         */
-        success : function() {
-          $("#img-approve").fadeOut();
-        }
-      });
     }
     /**
      * @return {undefined}
      */
     function post() {
-      $.ajax({
-        url : "/ajax_moderate",
-        type : "post",
-        data : "action=disapprove&iid=" + img.id,
-        /**
-         * @return {undefined}
-         */
-        success : function() {
-          $("#img-disapprove").fadeOut();
-        }
-      });
     }
     /**
      * @return {undefined}
      */
     function callback() {
-      if (confirm("Permanently delete this image?")) {
-        complete("Deleting Image...");
-        $.ajax({
-          url : "/ajax_img_delete",
-          data : "iid=" + img.id,
-          /**
-           * @param {?} textStatus
-           * @return {undefined}
-           */
-          success : function(textStatus) {
-            if (textStatus) {
-              complete(false);
-              MSG(textStatus, "red");
-            } else {
-              /** @type {string} */
-              self.location = "/creations";
-            }
-          }
-        });
-      }
     }
     /**
      * @return {undefined}
      */
     function remove() {
-      $("#img-update").replaceWith("<p>Updating...</p>");
-      $.ajax({
-        url : "/ajax_img_update",
-        data : {
-          iid : img.id,
-          title : $("#img-title-edit").val(),
-          tags : $("#img-tags-edit").val(),
-          desc : $("#img-desc-edit").val(),
-          main_tag : $('input[name="img-main-tag-edit"]:checked').val()
-        },
-        /**
-         * @param {?} textStatus
-         * @return {undefined}
-         */
-        success : function(textStatus) {
-          if (textStatus) {
-            alert(textStatus);
-          } else {
-            /** @type {string} */
-            self.location = self.location.href.replace(/\?lerp=[0-9]+/, "") + "?lerp=" + +new Date;
-          }
-        }
-      });
     }
     /**
      * @return {undefined}
      */
     function handler() {
-      if (!handler.done) {
-        /** @type {boolean} */
-        handler.done = true;
-        $(this).removeClass("l but sml").html("Loading...");
-        request();
-      }
     }
     /**
      * @return {undefined}
      */
     function request() {
-      $.ajax({
-        url : "/ajax_img_admin",
-        data : {
-          iid : img.id
-        },
-        /**
-         * @param {?} status
-         * @return {undefined}
-         */
-        success : function(status) {
-          $("#img-edit-btn").remove();
-          $("#img-admin").append(status);
-        }
-      });
     }
     /**
      * @param {string} selector
@@ -2109,20 +1489,6 @@ $d = $(document);
           loading.hide();
         });
       });
-      element.on("vclick", ".my-submit-btn", function() {
-        open($(this).attr("data-iid"));
-      }).on("click", ".img-flag-cancel", clicked).on("click", ".img-flag-submit", get).on("click", ".img-flag", handle).on("vclick", ".img-flip", initialize).on("submit", "#sForm", handler).on("click", "#login-button", save).on("vclick", ".menu-btn", start).on("click", ".show-login", select).on("vclick", "#numNots", create).on("vclick", "#aLogout", onload).on("click", ".gen-no-watermark", function(event) {
-        if (!I.done) {
-          return false;
-        }
-        if (!I.user.pro) {
-          return done("You can remove our watermark and get a bunch of other cool upgrades with Imgflip Pro!", ({
-            "/gifgenerator" : "vgif",
-            "/images-to-gif" : "igif"
-          }[location.pathname] || location.pathname) + "_watermark"), cancelEvent(event);
-        }
-      });
-      applyTips();
       update();
       run();
     });
@@ -2130,29 +1496,6 @@ $d = $(document);
      * @return {undefined}
      */
     self.initHome = function() {
-      var pos0 = $(".base-unit").eq(5);
-      var resizeHandler = connect(function() {
-        if (100 > pos0.offset().top - $window.height() - $window.scrollTop()) {
-          $("div.base-img").quickEach(function() {
-            this.replaceWith('<img class="' + this.attr("class") + '" src="' + this.data("src") + '" alt="' + this.data("alt") + '"/>');
-          });
-          $window.off("scroll", resizeHandler);
-        }
-      });
-      if (pos0[0]) {
-        $window.on("scroll", resizeHandler);
-        resizeHandler();
-      }
-      after();
-      element.on("vclick", ".base-toggle-main-tags", function(event) {
-        $(".main-tags").toggleClass("force-show");
-        return cancelEvent(event);
-      }).on("vclick", ".base-toggle-leaderboard", function(event) {
-        $("#base-right,#leaderboard").toggleClass("force-show");
-        return cancelEvent(event);
-      });
-      bindEvents("video.base-img");
-      select(report);
     };
     /**
      * @return {undefined}
@@ -2180,22 +1523,8 @@ $d = $(document);
             }
           }
         });
-        $("#img-prev,#img-next").click(function(event) {
-          var dest = $(this).attr("href");
-          if (27 === I.user.id) {
-            self.location = dest;
-          }
-          cancelEvent(event);
-        });
-        $(".img-down").click(function() {
-          show(img.id, 0, this.parentNode);
-        });
-        $(".img-up").click(function() {
-          show(img.id, 1, this.parentNode);
-        });
         render(".c-text img");
         done("#fShare", img.id.toString(36), img.type, doc.title.split(" - Imgflip")[0].split(/ Meme$/)[0]);
-        $("#img-embed-codes-btn").click(get);
         stop();
         element.on("focus", "input,textarea", function() {
           stop(false);

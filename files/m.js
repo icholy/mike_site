@@ -199,7 +199,6 @@
     var $img = $("#doneImage");
     var result = $("#doneUrl");
     if (!$img.attr("src")) {
-      $img.attr("src", (body ? "//i2.imgflip.com/" : IMAGE_DOMAIN) + email + "." + data);
     } else {
       if (!body) {
         /** @type {Image} */
@@ -255,38 +254,6 @@
     result = $('<div class="l but">Make another</div>').click(element);
     element = $("#doneLinks");
     element.html(image);
-    if (body) {
-      /** @type {string} */
-      options = "This image is private. It will only be stored on imgflip servers long enough for you to download it.";
-      if ("s3" === a.error) {
-        /** @type {string} */
-        options = '<span style="color:red">Whoops! Temporary error while uploading to clouds. You can download your image directly, or reload and try again.</span>';
-      }
-      $("#doneShare").html(options);
-    } else {
-      button = $("<a class='l but' href='" + button + "'>Go to image page</a>");
-      button.click(function() {
-        /** @type {boolean} */
-        p = false;
-      });
-      element.append(button);
-      insertShares("#doneShare", email, data, options);
-    }
-    element.append(result);
-    if (!win.disable_zaz) {
-      if (!body) {
-        if (!("gif" === data)) {
-          /** @type {string} */
-          body = "http://www.zazzle.com/api/create/at-238106848995316905?rf=238106848995316905&ax=DesignBlast&sr=250237863432431386&t__useQpc=true&ed=true&t__smart=true&continueUrl=" + encodeURI("https://imgflip.com/i/" + email) + "&fwd=ProductPage&coverimage=" + encodeURI("https://i.imgflip.com/" + email + "." + data);
-          body = $('<div class="done-msg"><a class="done-zazzle-link" target="_blank" href="' + body + '">Put this meme on a T-shirt/hat/mug/etc. on Zazzle!</a></div>');
-          body.find(".done-zazzle-link").click(function() {
-            /** @type {boolean} */
-            p = false;
-          });
-          element.after(body);
-        }
-      }
-    }
   }
   var ya = win.File && (win.FileReader && win.FileList);
   /**
@@ -1230,35 +1197,6 @@
      * @return {undefined}
      */
     function parse() {
-      $("#mygen").hide();
-      $("#memewrap").show();
-      $(".mm-tab").removeClass("set");
-      $("#memetab").addClass("set");
-      if (!$("#memewrap").html()) {
-        /** @type {number} */
-        var a = 0;
-        /** @type {string} */
-        var pathString = "";
-        /** @type {number} */
-        var c = 0;
-        var e;
-        /** @type {string} */
-        var d = "//s.imgflip.com/ms" + spriteNum + ".jpg";
-        var key;
-        for (key in info) {
-          if (info.hasOwnProperty(key)) {
-            if (!isNaN(key)) {
-              a++;
-              /** @type {string} */
-              e = 'style="background:url(' + d + ") " + -50 * c + 'px 0px;"';
-              c++;
-              pathString += '<div class="im" ' + e + " onclick=\"mm.changeMeme('" + key + '\')" alt="' + info[key].name + ' Meme Image" title="Make ' + info[key].name + ' Meme"></div>';
-            }
-          }
-        }
-        $("#memewrap").append(pathString + '<a class="y but" id="allTemplates" href="/memetemplates">View All Meme Templates</a>');
-      }
-      bind();
     }
     /**
      * @return {undefined}
@@ -1434,14 +1372,6 @@
        * @return {?}
        */
       function complete(status) {
-        var elem;
-        /** @type {string} */
-        elem = "" + ('<tr class="mm-search-result" data-id="' + status.id + '">');
-        /** @type {string} */
-        elem = elem + '<td class="mm-search-result-img-td">' + ('<img class="mm-search-result-img" src="https://i.imgflip.com/2/' + (~~status.id).toString(36) + '.jpg"/>');
-        elem += "</td>";
-        elem += '<td class="mm-search-result-text">' + status.name + "</td>";
-        return elem += "</tr>";
       }
       /**
        * @return {?}
@@ -1649,7 +1579,7 @@
     var err = false;
     /** @type {Array.<string>} */
     var option = "#000000 #ffffff #995555 #ff3333 #ff8800 #eeee00 #22ee22 #3333ff #00bff3 #dd00cc".split(" ");
-    var pattern = item.scumbagPath || "/img_util/scumbag_hat2.png";
+    var pattern = item.scumbagPath;
     /** @type {boolean} */
     var has_drawing = false;
     /** @type {number} */
@@ -2304,7 +2234,6 @@
             } else {
               loading("Generating Meme...");
               remove(function(event) {
-                e.data("meme-iid", event.iid).addClass("has-pending-img").prepend('<img class="c-pending-img" src="//i.imgflip.com/' + event.iid.toString(36) + '.jpg"/>');
                 loading(false);
                 BOX.hide();
               }, true);
