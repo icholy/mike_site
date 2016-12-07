@@ -36,6 +36,9 @@
     </div>
   </div>
 
+  <div id="meme-list" class="m mm-main ibox clearfix">
+  </div>
+
 
 </div>
 
@@ -43,15 +46,50 @@
   usermemeID=0;
   memes = [
     {
-      "id": 0,
       "name": "Bad Luck Mike",
       "w": 568,
       "h": 335,
       "altNames": "bad luck mike",
       "positions": "",
       "url_name": "Bad-Luck-Mike"
+    }, {
+      "name": "Buzz Mike",
+      "w": 568,
+      "h": 335,
+      "altNames": "buzz mike",
+      "positions": "",
+      "url_name": "Buzz-Mike"
+    }, {
+      "name": "Hippie Mike",
+      "w": 568,
+      "h": 335,
+      "altNames": "hippie mike",
+      "positions": "",
+      "url_name": "Hippie-Mike"
+    }, {
+      "name": "Office Mike",
+      "w": 568,
+      "h": 335,
+      "altNames": "office mike",
+      "positions": "",
+      "url_name": "Office-Mike"
+    }, {
+      "name": "Skumbag Mike",
+      "w": 568,
+      "h": 335,
+      "altNames": "skumbag mike",
+      "positions": "",
+      "url_name": "Skumbag-Mike"
+    }, {
+      "name": "Tripping Mike",
+      "w": 568,
+      "h": 335,
+      "altNames": "tripping mike",
+      "positions": "",
+      "url_name": "Tripping-Mike"
     }
   ];
+
 </script>
 
 <!--[if lt IE 9]>
@@ -62,6 +100,14 @@
 <script src="./files/common.js"></script>
 <script src="./files/m.js"></script><script>
 $(function (){
+
+  var $memeList = $("#meme-list");
+  var size = 100;
+
+  for (var i = 0; i < memes.length; i++) {
+    var $img = $('<img src="./s/meme/' + memes[i].url_name + '.jpg" width="' + size + 'px" height="' + size + 'px" onclick="mm.select(' + i + ')">');
+    $memeList.append($img);
+  }
 
   mm = new MemeMaker(memes, { numTexts: 2 });
   mm.init();
