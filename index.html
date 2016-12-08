@@ -36,6 +36,7 @@
         <img class="mm-img shadow" alt="meme generator image preview" src="">
       </div>
     </div><div id="mm-settings">
+      <h1 id="meme-name">Bad Luck Mike</h1>
       <div class="mm-text-boxes"></div>
       <div class="gen-wrap clearfix">
         <div class="mm-generate b but">Generate Meme</div>
@@ -279,13 +280,19 @@
 <!--[endif]-->
 <script src="files/common.js"></script>
 <script src="files/m.js"></script><script>
+
+function chooseMeme(i) {
+  $("#meme-name").html(memes[i].name);
+  mm.select(i);
+}
+
 $(function (){
 
   var $memeList = $("#meme-list");
   var size = 100;
 
   for (var i = 0; i < memes.length; i++) {
-    var $img = $('<img src="' + memes[i].url_name + '" width="' + size + 'px" height="' + size + 'px" onclick="mm.select(' + i + ')">');
+    var $img = $('<img src="' + memes[i].url_name + '" width="' + size + 'px" height="' + size + 'px" onclick="chooseMeme(' + i + ')">');
     $memeList.append($img);
   }
 
